@@ -1,0 +1,63 @@
+{% extends 'base.html' %} <!--extends the base.html for navbar and footer and for all links-->
+{% load static %} <!--load static to load all css js images file-->
+{% block title %}Products{% endblock title %}  <!--title block-->
+{% block content %} <!--content block-->
+<!-- banner 1 product page -->
+<section id="home_sec1">
+    <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/1-Homepage-Banner_3.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/1-Homepage-Banner_2.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- conatiner to show all products -->
+<section class="text-gray-600 body-font">
+  <div class="container-fluid px-4 py-4 mx-auto">
+  {% if 'search' in request.path %}
+  <h2 class="banner_text">YOUR SEARCH RESULT</h2>
+  {% else %}
+  <h2 class="banner_text">OUR PRODUCTS</h2>
+  {% endif %}
+    <div class="flex flex-wrap -m-4 ml-5">
+      {% if products %}
+      {% for product in products %}
+      <div class="product_box">
+        <a class="block relative h-48 rounded overflow-hidden" href="{{product.product_link}}" target="_blank">
+          <img alt="ecommerce"class="object-cover object-center w-full h-full block" src="{{ product.get_photo_url }}">
+        </a>
+        <div class="mt-4">
+          <div style="height: 20vh;">
+          <h2 class="text-gray-900 title-font text-xl font-medium mb-0">{{product.product_name}}</h2>
+          <p class="mt-0">{{product.category}}</p>
+          {% if product.qty2_price == None %}
+                <p class="mb-0 mt-0">{{product.productqt1}} &nbsp;&nbsp;&nbsp; <span id="price1">₹ {{product.qty1_price}}</span></p>
+          {% elif product.qty1_price == None %}
+                <p class="mb-0 mt-0">{{product.productqt2}} &nbsp;&nbsp;<span id="price2">₹ {{product.qty2_price}}</span></p>
+          {% else %}
+                <p class="mb-0 mt-0">{{product.productqt1}} &nbsp;&nbsp;&nbsp; <span id="price1">₹ {{product.qty1_price}}</span></p>
+                <p class="mb-0 mt-0">{{product.productqt2}} &nbsp;&nbsp;<span id="price2">₹ {{product.qty2_price}}</span></p>
+          {% endif %}
+          </div>
+          <a href="{{product.product_link}}" target="_blank" class="btn">Buy now</a>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="block" style="margin: 0% auto;">
+      <h2 class="text-center">No such product found</h2><br>
+      <p class="text-center">go for another category</p>
+      </div>
+      {% endif %}
+  </div>
+      <div class="block text-center m-auto">
+      <a href="{% url 'categorypage' %}" class="btn my-5" style="padding: 1% 2%;">Back to main category</a>
+      </div>
+  </div>
+</section>
+{% endblock content %}

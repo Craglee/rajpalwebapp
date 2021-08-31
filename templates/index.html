@@ -1,0 +1,163 @@
+{% extends 'base.html' %} <!--extends the base.html for navbar and footer and for all links-->
+{% load static %} <!--load static to load all css js images file-->
+{% block title %}Home{% endblock title %} <!--title block-->
+{% block content %} <!--content block-->
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+</svg>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert" style="z-index:10;">
+<dic class="flex">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+  <strong>{{message}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+</div>
+{% endfor %}
+{% endif %}
+<!-- home page 1 banner -->
+<section id="home_sec1">
+  <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/1-Homepage-Banner_3.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/1-Homepage-Banner_2.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- combo product container  -->
+<section class="text-gray-600 body-font" id="flip">
+  <div class="container-fluid px-5 py-24 mx-auto hide"  id="combo-container">
+    <div class="flex flex-col text-center w-full mb-10">
+      <h1>Combo Products</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Purifies the air and fills home with positive energy with
+        our combo packs.</p>
+    </div>
+    <div class="flex flex-wrap -m-4" style="justify-content: center;">
+      {% for combo_products in combo_product %}
+      <div class="p-4 lg:w-1/3 my-3 mx-3 combo_product_box">
+        <div class="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
+          <img alt="team" class="flex-shrink-0 rounded-lg w-48 h-48 object-cover object-center sm:mb-0 mb-4"
+            src="{{combo_products.image.url}}">
+          <div class="flex-grow sm:pl-8 text-left">
+            <h2 class="text-gray-700 combo_product_heading">{{combo_products.product_name}}</h2>
+            <p class="mb-4">{{combo_products.description}}<br>
+            {{combo_products.quantity}}</p>
+            <a href="{{combo_products.product_link}} "
+              class="btn " target="_blank">Buy Now</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- home page banner 2 with about us -->
+<div class="carousel-inner" id="AboutUs">
+  <div class="carousel-item active">
+    <img src="{% static 'images/2-Homepage-Banner---About-us.jpg' %}" class="d-block w-100" alt="...">
+  </div>
+</div>
+
+<!-- category container shows the category  -->
+<section class="text-gray-600 body-font my-2 py-14">
+  <div class="text-center mb-20 my-4">
+    <h1 class="text-gray-700">Product Categories</h1>
+    <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500s mb-5">Buy pleasent and refreshing aura
+      that bosts your confidence</p>
+  </div>
+  <div class="container text-center px-5 py-2 mx-auto">
+    <div class="flex flex-wrap -m-4" style="justify-content: center;">
+      {% for categories in category %}
+      <div class="lg:w-1/4 md:w-1/2 p-4 w-full category_box  my-2">
+        <a class="block relative h-48 rounded overflow-hidden" href="{% url 'productpage' %}?category={{categories.id}}">
+          <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="{{ categories.get_photo_url }}">
+        </a>
+        <div class="mt-4">
+          <a href="{% url 'productpage' %}?category={{categories.id}}" style="text-decoration:none;">
+            <h2 class="text-gray-900 title-font text-lg font-medium">{{categories.category_name}}</h2>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="my-5" style="text-align:center;">
+      <a href="{% url 'categorypage' %}" class="btn" style="padding: 1% 5%;">View all</a>
+    </div>
+  </div>
+</section>
+
+<!-- instagram feed container -->
+<section id="home_sec4">
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/1-Homepage-Banner.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+</section>
+
+<!-- contact us conatiner -->
+<section class="text-gray-600 body-font relative" id="ContactUs">
+  <div class=" px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
+    <div
+      class="lg:w-2/4 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235.73739042194794!2d72.85144480851434!3d19.028609921856493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xe08971914c2d5d7f!2sRajpal%20Products!5e0!3m2!1sen!2sin!4v1629283250877!5m2!1sen!2sin"
+        width="100%" height="100%" class="absolute inset-0" frameborder="0" title="map" marginheight="0" marginwidth="0"
+        scrolling="no"></iframe>
+      <div class="bg-white relative flex flex-wrap py-6 rounded shadow-md" style="filter: invert(1);opacity: .7;">
+        <div class="lg:w-1/2 px-6">
+          <h2 class="title-font font-semibold text-gray-900 tracking-widest text-xs">ADDRESS</h2>
+          <p class="mt-1">SHOP NO.2 BALDOTA HOUSE, NEAR KABUTAR KHANA, LAXMI NARAYAN LANE, MATUNGA (C.RAY) MUMBAI-400019
+          </p>
+        </div>
+        <div class="lg:w-1/2 px-6 mt-4 lg:mt-0">
+          <h2 class="title-font font-semibold text-gray-900 tracking-widest text-xs">EMAIL</h2>
+          <h6 class="text-gray-500 leading-relaxed" style="text-decoration:none;">rajpals_purelydivine@yahoo.in</h6>
+          <h2 class="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">PHONE</h2>
+          <p class="leading-relaxed">+91 99209 36644</p>
+        </div>
+      </div>
+    </div>
+    <div class="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+      <h1 class="text-gray-900 mb-1 ">Contact Us</h1>
+      <p class="leading-relaxed mb-5 text-gray-600">Post-ironic portland shabby chic echo park, banjo fashion axe</p>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="relative mb-4">
+          <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
+          <input type="text" id="name" name="name"
+            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+        </div>
+        <div class="relative mb-4">
+          <label for="email" class="leading-7 text-sm text-gray-600">Contact no</label>
+          <input type="tel" id="pno" name="contact_no" maxlength="10"
+            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+        </div>
+        <div class="relative mb-4">
+          <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+          <input type="email" id="email" name="email"
+            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+        </div>
+        <div class="relative mb-4">
+          <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
+          <textarea id="message" name="inquiry"
+            class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+        </div>
+        <button class="btn" type='submit'>Send</button>
+      </form>
+      <p class="text-xs text-gray-500 mt-3">Chicharrones blog helvetica normcore iceland tousled brook viral artisan.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock content %}  <!--end the block content-->

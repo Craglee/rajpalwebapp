@@ -1,0 +1,41 @@
+{% extends 'base.html' %} <!--extends the base.html for navbar and footer and for all links-->
+{% load static %}  <!--load static to load all css js images file-->
+{% block title %}Category{% endblock title %} <!--title block-->
+{% block content %} <!--content block-->
+
+<!-- banner no 1 container -->
+<section id="home_sec1">
+  <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade" data-bs-ride="carousel" >
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/1-Homepage-Banner_2.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/1-Homepage-Banner_3.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+  </div>
+</section>
+    <!-- ========================= SECTION CONTENT start// ========================= -->
+<section class="text-gray-600 body-font">
+  <h2 class="banner_text">OUR PRODUCTS CATEGORY</h2>
+  <div class="container-fluid text-center px-5 py-2 mx-auto">
+    <div class="flex flex-wrap -m-4 ml-5">
+    {% for categories in category %}  <!--to itterate all category and show it on page-->
+      <div class="product_box">
+        <a class="block relative h-48 rounded overflow-hidden" href="{% url 'productpage' %}?category={{categories.id}}">
+          <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="{{ categories.get_photo_url }}">
+        </a>
+        <div class="mt-4">
+        <div style="height:10vh;">
+          <h2 class="text-gray-900 title-font text-lg font-medium">{{categories.category_name}}</h2>
+        </div>
+          <a href="{% url 'productpage' %}?category={{categories.id}}" class="btn ">view product</a>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+{% endblock content %}  <!--close the content block-->
